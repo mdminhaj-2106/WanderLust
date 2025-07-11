@@ -1,0 +1,25 @@
+<%layout("../layouts/boilerplate.ejs")%>
+
+<div class="row mt-5">
+    <div class="col-8 offset-2">
+        <div class="alert alert-danger text-center" role="alert">
+            <h1 class="alert-heading">
+                <i class="fas fa-exclamation-triangle"></i> 
+                Oops! Something went wrong
+            </h1>
+            <hr>
+            <p class="mb-0">
+                <strong>Error:</strong> <%= message %>
+            </p>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/listings" class="btn btn-primary">
+                <i class="fas fa-home"></i> Back to Listings
+            </a>
+            <button onclick="history.back()" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </button>
+        </div>
+    </div>
+</div>

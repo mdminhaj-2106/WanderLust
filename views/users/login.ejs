@@ -1,0 +1,63 @@
+<%layout("../layouts/boilerplate.ejs")%>
+
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-form-card">
+            <div class="auth-welcome">
+                <div class="auth-welcome-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h2 class="auth-form-title">Welcome Back</h2>
+                <p class="auth-form-subtitle">Please sign in to your account</p>
+            </div>
+            
+            <form action="/login" method="post" novalidate class="needs-validation">
+                <div class="auth-form-group">
+                    <label for="username" class="auth-form-label">
+                        <i class="fas fa-user me-2"></i>Username
+                    </label>
+                    <input 
+                        type="text" 
+                        class="auth-form-input" 
+                        id="username" 
+                        name="username" 
+                        placeholder="Enter your username"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Please enter your username.
+                    </div>
+                </div>
+                
+                <div class="auth-form-group">
+                    <label for="password" class="auth-form-label">
+                        <i class="fas fa-lock me-2"></i>Password
+                    </label>
+                    <input 
+                        type="password" 
+                        class="auth-form-input" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Please enter your password.
+                    </div>
+                </div>
+                
+                <button type="submit" class="auth-submit-btn">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </button>
+            </form>
+            
+            <div class="auth-form-links">
+                <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+</script>

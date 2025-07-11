@@ -1,0 +1,165 @@
+<%layout("../layouts/boilerplate.ejs")%>
+
+    <body>
+        <div class="mt-3 row">
+            <div class="col-8 offset-2">
+                <h3 class="listing-det">
+                    <%=listing.title%>
+                </h3>
+                <div class="cards">
+                    <img src="<%=listing.image.url%>" class="card-img-show" alt="listing-image">
+                    <div class="card-body">
+                        Owned By: <%=listing.owner.username%>
+                            <br>
+                            <%=listing.description%>
+                                <br>
+                                <b>
+                                    &#8377; <%=listing.price.toLocaleString("en-IN")%>
+                                </b>
+                                <br>
+                                <%=listing.location%>
+                                    <br>
+                                    <%=listing.country%>
+
+                                        <%if( currUser && currUser._id.equals(listing.owner._id)) {%>
+                                            <div class="row mt-2">
+                                                <form class="col-2" action="/listings/<%=listing._id%>/edit"
+                                                    class="w-100">
+                                                    <button class="btn btn-primary btn-action w-100">
+                                                        <i class="fas fa-edit me-2"></i>Edit
+                                                    </button>
+                                                </form>
+                                                <form class="col-2" action="/listings/<%=listing._id%>/?_method=DELETE"
+                                                    method="post" class="w-100">
+                                                    <button class="btn btn-danger btn-action w-100">
+                                                        <i class="fas fa-trash me-2"></i>Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+
+                                            <%}%>
+
+
+                                                <!-- Review Form - Only for logged in users -->
+                                                <%if (currUser){%>
+                                                    <div class="review-form col-12 offset-0 mt-4">
+                                                        <h4 class="mb-2">Leave your Review: </h4>
+                                                        <form action="/listings/<%=listing.id%>/reviews" method="post"
+                                                            class="review-form-custom">
+                                                            <div class="review-f-blk mb-3">
+                                                                <label for="rating" class="form-label">Rating</label>
+                                                                <input type="range" name="review[rating]" id="rating"
+                                                                    class="form-range" min="1" max="5" value="3">
+                                                                <div class="mt-1">
+                                                                    <small class="text-muted">Rating: <span
+                                                                            id="rating-value">3</span>/5</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="review-f-blk mb-3">
+                                                                <label for="comments"
+                                                                    class="form-label">Comments</label>
+                                                                <textarea name="review[comments]" id="comments"
+                                                                    class="form-control" rows="5"
+                                                                    placeholder="Share your thoughts about this listing..."></textarea>
+                                                                <div class="invalid-feedback">Please enter at least 5
+                                                                    characters for your review</div>
+                                                                <div class="valid-feedback">Looks good!</div>
+                                                            </div>
+                                                            <button class="btn btn-outline-dark"
+                                                                type="submit">Submit</button>
+                                                        </form>
+                                                    </div>
+                                                    <%}%>
+
+                                                        <!-- All Reviews Section -->
+                                                        <hr class="mt-4">
+                                                        <div class="reviews-section">
+                                                            <h4><b>All Reviews</b>
+                                                                <% if (listing.reviews.length> 0) { %>
+                                                                    <small class="text-muted">
+                                                                        (<%= listing.reviews.length %> review<%=
+                                                                                (listing.reviews.length===1 ? '' : 's' )
+                                                                                %>)
+                                                                    </small>
+                                                                    <% } %>
+                                                            </h4>
+
+                                                            <% if (listing.reviews.length===0) { %>
+                                                                <p class="text-muted">No reviews yet. Be the first to
+                                                                    review!</p>
+                                                                <% } else { %>
+                                                                    <div class="row mt-3 mb-3">
+                                                                        <%for(let review of listing.reviews){%>
+                                                                            <div class="col-md-6 mb-3">
+                                                                                <div class="card review-card h-100">
+                                                                                    <div class="card-body p-3">
+                                                                                        <!-- Header with username and date -->
+                                                                                        <div
+                                                                                            class="d-flex justify-content-between align-items-start mb-0">
+                                                                                            <h6
+                                                                                                class="card-title mb-0 fw-bold">
+                                                                                                @
+                                                                                                <%=review.author.username%>
+                                                                                            </h6>
+                                                                                            <small class="text-muted">
+                                                                                                <%= new
+                                                                                                    Date(review.createdAt
+                                                                                                    || new
+                                                                                                    Date()).toLocaleDateString("en-IN",
+                                                                                                    { month: 'short' ,
+                                                                                                    day: 'numeric' ,
+                                                                                                    year: 'numeric' })
+                                                                                                    %>
+                                                                                            </small>
+                                                                                        </div>
+                                                                                        <!-- Rating -->
+                                                                                        <div class="rating mb-2 mt-1">
+                                                                                            <% for(let i=1; i <=5; i++)
+                                                                                                { %>
+                                                                                                <% if(i <=review.rating)
+                                                                                                    { %>
+                                                                                                    <span
+                                                                                                        class="text-warning">★</span>
+                                                                                                    <% } else { %>
+                                                                                                        <span
+                                                                                                            class="text-muted">☆</span>
+                                                                                                        <% } %>
+                                                                                                            <% } %>
+                                                                                                                <small
+                                                                                                                    class="text-muted ms-1">(
+                                                                                                                    <%=review.rating%>
+                                                                                                                        /5)</small>
+                                                                                        </div>
+
+                                                                                        <!-- Comment -->
+                                                                                        <p class="card-text mb-0">
+                                                                                            <%=review.comments%>
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    <!-- Delete button - only for review author -->
+                                                                                    <%if (currUser &&
+                                                                                        currUser._id.equals(review.author._id))
+                                                                                        {%>
+                                                                                        <div
+                                                                                            class="card-footer bg-transparent border-top p-2 mb-2 mt-1">
+                                                                                            <form
+                                                                                                action="/listings/<%=listing.id%>/reviews/<%=review.id%>?_method=DELETE"
+                                                                                                method="post"
+                                                                                                class="d-inline">
+                                                                                                <button
+                                                                                                    class="btn btn-danger btn-sm">Delete</button>
+                                                                                            </form>
+                                                                                        </div>
+                                                                                        <%}%>
+                                                                                </div>
+                                                                            </div>
+                                                                            <%}%>
+                                                                    </div>
+                                                                    <% } %>
+                                                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>

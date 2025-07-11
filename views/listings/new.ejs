@@ -1,0 +1,37 @@
+<%layout("../layouts/boilerplate")%>
+        <div class="row" id="new-form">
+            <div class="col-6 offset-3">
+                <h3 class="mb-3 mt--3">Create your own listing</h3>
+                <form action="/listings" method="post" novalidate class="needs-validation">
+                    <div>
+                        <label for="title" class="form-label" >Title</label>
+                        <input type="text" name="listing[title]" placeholder="Title" class="form-control" required>
+                    </div>
+                    <div>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="listing[description]" placeholder="Description" class="form-control" required></textarea>
+                    </div>
+                    <div>
+                        <label for="image" class="form-label">Image</label>
+                        <input type="text" name="listing[image][url]" placeholder="Paste Image Link here"
+                            class="form-control">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="price" class="form-label ">Price</label>
+                            <input type="text" name="listing[price]" placeholder="Price" class="form-control " required>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" name="listing[location]" placeholder="location" class="form-control " required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" name="listing[country]" placeholder="country" class="form-control" required>
+                    </div>
+                    <button class="btn btn-dark add-btn">Submit</button>
+                </form>
+            </div>
+        </div>

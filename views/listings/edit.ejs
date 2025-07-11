@@ -1,0 +1,38 @@
+<%layout("../layouts/boilerplate")%>
+        <div class="row" id="new-form">
+            <div class="col-6 offset-3">
+                <h3 class="mb-3 mt--3">Edit your listing</h3>
+                <form action="/listings/<%=listing.id%>?_method=PUT" method="post">
+                    <div>
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="listing[title]" placeholder="Title" class="form-control" value="<%=listing.title%>">
+                    </div>
+                    <div>
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="listing[description]" placeholder="Description" class="form-control"><%=listing.description%></textarea>
+                    </div>
+                    <div>
+                        <label for="image" class="form-label">Image</label>
+                        <input type="text" name="listing[image][url]" placeholder="Paste Image Link here" class="form-control" value="<%=listing.image.url%>">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="price" class="form-label ">Price</label>
+                            <input type="number" name="listing[price]" placeholder="Price"
+                                class="form-control" value="<%=listing.price%>">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" name="listing[location]" placeholder="location"
+                                class="form-control" value="<%=listing.location%>">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" name="listing[country]" placeholder="country" class="form-control" value="<%=listing.country%>">
+                    </div>
+                    <button class="btn btn-dark edit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
