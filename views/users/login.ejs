@@ -8,56 +8,60 @@
                     <i class="fas fa-sign-in-alt"></i>
                 </div>
                 <h2 class="auth-form-title">Welcome Back</h2>
-                <p class="auth-form-subtitle">Please sign in to your account</p>
+                <p class="auth-form-subtitle">Sign in to continue your journey</p>
             </div>
             
-            <form action="/login" method="post" novalidate class="needs-validation">
+            <form action="/login" method="post" novalidate class="needs-validation auth-form">
                 <div class="auth-form-group">
-                    <label for="username" class="auth-form-label">
-                        <i class="fas fa-user me-2"></i>Username
-                    </label>
-                    <input 
-                        type="text" 
-                        class="auth-form-input" 
-                        id="username" 
-                        name="username" 
-                        placeholder="Enter your username"
-                        required
-                    >
+                    <div class="auth-input-group">
+                        <input 
+                            type="text" 
+                            class="auth-form-input" 
+                            id="username" 
+                            name="username" 
+                            required
+                        >
+                        <label for="username" class="auth-form-label">Username</label>
+                        <i class="fas fa-user auth-input-icon"></i>
+                    </div>
                     <div class="invalid-feedback">
                         Please enter your username.
                     </div>
                 </div>
                 
                 <div class="auth-form-group">
-                    <label for="password" class="auth-form-label">
-                        <i class="fas fa-lock me-2"></i>Password
-                    </label>
-                    <input 
-                        type="password" 
-                        class="auth-form-input" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Enter your password"
-                        required
-                    >
+                    <div class="auth-input-group">
+                        <input 
+                            type="password" 
+                            class="auth-form-input" 
+                            id="password" 
+                            name="password" 
+                            required
+                        >
+                        <label for="password" class="auth-form-label">Password</label>
+                        <i class="fas fa-lock auth-input-icon"></i>
+                    </div>
                     <div class="invalid-feedback">
                         Please enter your password.
                     </div>
                 </div>
                 
+                <div class="auth-form-group">
+                    <div class="auth-checkbox-group">
+                        <input type="checkbox" id="remember" name="remember" class="auth-checkbox">
+                        <label for="remember" class="auth-checkbox-label">Remember me</label>
+                    </div>
+                </div>
+                
                 <button type="submit" class="auth-submit-btn">
-                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
                 </button>
             </form>
             
             <div class="auth-form-links">
                 <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+                <p><a href="/forgot-password">Forgot your password?</a></p>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    
-</script>

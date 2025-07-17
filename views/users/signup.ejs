@@ -11,62 +11,62 @@
                 <p class="auth-form-subtitle">Join WanderLust and start your journey</p>
             </div>
             
-            <form action="/signup" method="post" novalidate class="needs-validation">
+            <form action="/signup" method="post" novalidate class="needs-validation auth-form">
                 <div class="auth-form-group">
-                    <label for="username" class="auth-form-label">
-                        <i class="fas fa-user me-2"></i>Username
-                    </label>
-                    <input 
-                        type="text" 
-                        class="auth-form-input" 
-                        id="username" 
-                        name="username" 
-                        placeholder="Choose a username"
-                        required
-                        minlength="3"
-                    >
+                    <div class="auth-input-group">
+                        <input 
+                            type="text" 
+                            class="auth-form-input" 
+                            id="username" 
+                            name="username" 
+                            required
+                            minlength="3"
+                        >
+                        <label for="username" class="auth-form-label">Username</label>
+                        <i class="fas fa-user auth-input-icon"></i>
+                    </div>
                     <div class="invalid-feedback">
                         Username must be at least 3 characters long.
                     </div>
                 </div>
                 
                 <div class="auth-form-group">
-                    <label for="email" class="auth-form-label">
-                        <i class="fas fa-envelope me-2"></i>Email
-                    </label>
-                    <input 
-                        type="email" 
-                        class="auth-form-input" 
-                        id="email" 
-                        name="email" 
-                        placeholder="Enter your email address"
-                        required
-                    >
+                    <div class="auth-input-group">
+                        <input 
+                            type="email" 
+                            class="auth-form-input" 
+                            id="email" 
+                            name="email" 
+                            required
+                        >
+                        <label for="email" class="auth-form-label">Email Address</label>
+                        <i class="fas fa-envelope auth-input-icon"></i>
+                    </div>
                     <div class="invalid-feedback">
                         Please enter a valid email address.
                     </div>
                 </div>
                 
                 <div class="auth-form-group">
-                    <label for="password" class="auth-form-label">
-                        <i class="fas fa-lock me-2"></i>Password
-                    </label>
-                    <input 
-                        type="password" 
-                        class="auth-form-input" 
-                        id="password" 
-                        name="password" 
-                        placeholder="Create a strong password"
-                        required
-                        minlength="6"
-                    >
+                    <div class="auth-input-group">
+                        <input 
+                            type="password" 
+                            class="auth-form-input" 
+                            id="password" 
+                            name="password" 
+                            required
+                            minlength="6"
+                        >
+                        <label for="password" class="auth-form-label">Password</label>
+                        <i class="fas fa-lock auth-input-icon"></i>
+                    </div>
                     <div class="invalid-feedback">
                         Password must be at least 6 characters long.
                     </div>
                 </div>
                 
                 <button type="submit" class="auth-submit-btn">
-                    <i class="fas fa-user-plus me-2"></i>Sign Up
+                    <i class="fas fa-user-plus me-2"></i>Create Account
                 </button>
             </form>
             

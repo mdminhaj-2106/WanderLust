@@ -1,37 +1,80 @@
-<%layout("../layouts/boilerplate")%>
-        <div class="row" id="new-form">
-            <div class="col-6 offset-3">
-                <h3 class="mb-3 mt--3">Create your own listing</h3>
-                <form action="/listings" method="post" novalidate class="needs-validation">
-                    <div>
-                        <label for="title" class="form-label" >Title</label>
-                        <input type="text" name="listing[title]" placeholder="Title" class="form-control" required>
-                    </div>
-                    <div>
-                        <label for="description" class="form-label">Description</label>
-                        <textarea name="listing[description]" placeholder="Description" class="form-control" required></textarea>
-                    </div>
-                    <div>
-                        <label for="image" class="form-label">Image</label>
-                        <input type="text" name="listing[image][url]" placeholder="Paste Image Link here"
-                            class="form-control">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="price" class="form-label ">Price</label>
-                            <input type="text" name="listing[price]" placeholder="Price" class="form-control " required>
-                        </div>
+<%layout("../layouts/boilerplate.ejs")%>
+<body>
+    <!-- Demo Switcher -->
+    <div class="demo-switcher">
+        <button class="btn btn-outline-light btn-sm" onclick="showCreateForm()">
+            <i class="fas fa-plus"></i> Create
+        </button>
+        <button class="btn btn-outline-light btn-sm" onclick="showEditForm()">
+            <i class="fas fa-edit"></i> Edit
+        </button>
+    </div>
 
-                        <div class="col-md-8">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" name="listing[location]" placeholder="location" class="form-control " required>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" name="listing[country]" placeholder="country" class="form-control" required>
-                    </div>
-                    <button class="btn btn-dark add-btn">Submit</button>
-                </form>
+    <!-- Create Form -->
+    <div class="form-container mt-4" id="createForm">
+        <div class="form-card">
+            <div class="form-header">
+                <h3 class="form-title">Create New Listing</h3>
+                <p class="form-subtitle">Share your amazing place with the world</p>
             </div>
+            
+            <form action="/listings" method="post" novalidate class="needs-validation">
+                <!-- Title Field -->
+                <div class="form-floating">
+                    <input type="text" name="listing[title]" class="form-control" id="createTitle" placeholder="Enter listing title" required>
+                    <label for="createTitle">Listing Title</label>
+                    <i class="fas fa-home form-icon"></i>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-floating">
+                    <textarea name="listing[description]" class="form-control" id="createDescription" placeholder="Describe your place" required></textarea>
+                    <label for="createDescription">Description</label>
+                    <i class="fas fa-align-left form-icon"></i>
+                </div>
+
+                <!-- Image Field -->
+                <div class="form-floating">
+                    <input type="url" name="listing[image][url]" class="form-control" id="createImage" placeholder="Paste image URL here">
+                    <label for="createImage">Image URL</label>
+                    <i class="fas fa-image form-icon"></i>
+                </div>
+
+                <div class="image-preview" id="createImagePreview" style="display: none;">
+                    <img id="createPreviewImg" src="" alt="Image preview">
+                    <p class="mt-2 text-muted">Image Preview</p>
+                </div>
+
+                <!-- Price and Location Row -->
+                <div class="form-row">
+                    <div class="form-floating col-price">
+                        <input type="number" name="listing[price]" class="form-control" id="createPrice" placeholder="Enter price" required min="0" step="0.01">
+                        <label for="createPrice">Price ($)</label>
+                        <i class="fas fa-dollar-sign form-icon"></i>
+                    </div>
+                    
+                    <div class="form-floating col-location">
+                        <input type="text" name="listing[location]" class="form-control" id="createLocation" placeholder="Enter location" required>
+                        <label for="createLocation">Location</label>
+                        <i class="fas fa-map-marker-alt form-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Country Field -->
+                <div class="form-floating">
+                    <input type="text" name="listing[country]" class="form-control" id="createCountry" placeholder="Enter country" required>
+                    <label for="createCountry">Country</label>
+                    <i class="fas fa-globe form-icon"></i>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-plus-circle me-2"></i>
+                    Create Listing
+                </button>
+            </form>
         </div>
+    </div>
+
+    
+    
+  

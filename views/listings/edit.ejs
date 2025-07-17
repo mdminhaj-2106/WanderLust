@@ -1,38 +1,82 @@
-<%layout("../layouts/boilerplate")%>
-        <div class="row" id="new-form">
-            <div class="col-6 offset-3">
-                <h3 class="mb-3 mt--3">Edit your listing</h3>
-                <form action="/listings/<%=listing.id%>?_method=PUT" method="post">
-                    <div>
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" name="listing[title]" placeholder="Title" class="form-control" value="<%=listing.title%>">
-                    </div>
-                    <div>
-                        <label for="description" class="form-label">Description</label>
-                        <textarea name="listing[description]" placeholder="Description" class="form-control"><%=listing.description%></textarea>
-                    </div>
-                    <div>
-                        <label for="image" class="form-label">Image</label>
-                        <input type="text" name="listing[image][url]" placeholder="Paste Image Link here" class="form-control" value="<%=listing.image.url%>">
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="price" class="form-label ">Price</label>
-                            <input type="number" name="listing[price]" placeholder="Price"
-                                class="form-control" value="<%=listing.price%>">
-                        </div>
+<%layout("../layouts/boilerplate.ejs")%>
 
-                        <div class="col-md-8">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" name="listing[location]" placeholder="location"
-                                class="form-control" value="<%=listing.location%>">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" name="listing[country]" placeholder="country" class="form-control" value="<%=listing.country%>">
-                    </div>
-                    <button class="btn btn-dark edit-btn">Submit</button>
-                </form>
-            </div>
+<body>
+    <!-- Toggle Buttons -->
+    <div class="container mt-4">
+        <div class="text-center mb-4">
+            <button class="btn btn-outline-primary me-2" onclick="showCreateForm()">
+                <i class="fas fa-plus me-2"></i>Create New
+            </button>
+            <button class="btn btn-outline-secondary" onclick="showEditForm()">
+                <i class="fas fa-edit me-2"></i>Edit Existing
+            </button>
         </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="form-container mt-4" id="editForm">
+        <div class="form-card">
+            <div class="form-header">
+                <h3 class="form-title">Edit Your Listing</h3>
+                <p class="form-subtitle">Update your listing details</p>
+            </div>
+            
+            <form action="/listings/123?_method=PUT" method="post" class="needs-validation" novalidate>
+                <!-- Title Field -->
+                <div class="form-floating">
+                    <input type="text" name="listing[title]" class="form-control" id="editTitle" 
+                           placeholder="Enter listing title" value="Beautiful Oceanview Villa" required>
+                    <label for="editTitle">Listing Title</label>
+                    <i class="fas fa-home form-icon"></i>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-floating">
+                    <textarea name="listing[description]" class="form-control" id="editDescription" 
+                              placeholder="Describe your place" required>A stunning oceanview villa with private beach access, perfect for a romantic getaway or family vacation.</textarea>
+                    <label for="editDescription">Description</label>
+                    <i class="fas fa-align-left form-icon"></i>
+                </div>
+
+                <!-- Image Field -->
+                <div class="form-floating">
+                    <input type="url" name="listing[image][url]" class="form-control" id="editImage" 
+                           placeholder="Paste image URL here" 
+                           value="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" required>
+                    <label for="editImage">Image URL</label>
+                    <i class="fas fa-image form-icon"></i>
+                </div>
+
+                <!-- Price and Location Row -->
+                <div class="form-row">
+                    <div class="form-floating col-price">
+                        <input type="number" name="listing[price]" class="form-control" id="editPrice" 
+                               placeholder="Enter price" value="299" min="0" step="0.01" required>
+                        <label for="editPrice">Price ($)</label>
+                        <i class="fas fa-dollar-sign form-icon"></i>
+                    </div>
+                    
+                    <div class="form-floating col-location">
+                        <input type="text" name="listing[location]" class="form-control" id="editLocation" 
+                               placeholder="Enter location" value="Malibu, California" required>
+                        <label for="editLocation">Location</label>
+                        <i class="fas fa-map-marker-alt form-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Country Field -->
+                <div class="form-floating">
+                    <input type="text" name="listing[country]" class="form-control" id="editCountry" 
+                           placeholder="Enter country" value="United States" required>
+                    <label for="editCountry">Country</label>
+                    <i class="fas fa-globe form-icon"></i>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-save me-2"></i>
+                    Update Listing
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
