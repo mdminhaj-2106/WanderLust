@@ -24,7 +24,7 @@ function debounce(func, wait) {
     };
 }
 
-// Enhanced Back to Top Button with Smooth Animations
+//Back to Top Button with Smooth Animations
 document.addEventListener('DOMContentLoaded', function() {
     const backToTopBtn = document.getElementById('backToTop');
     if (backToTopBtn) {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Enhanced input interactions with ripple effects
+//input interactions with ripple effects
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('form');
     
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
             input.addEventListener('input', debouncedValidation);
         });
 
-        // Enhanced form submission with loading animations
+        //form submission with loading animations
         form.addEventListener('submit', function (e) {
             const submitBtn = this.querySelector('.auth-submit-btn');
 
@@ -168,93 +168,8 @@ function createAuthParticles() {
 
 document.addEventListener('DOMContentLoaded', createAuthParticles);
 
-// Enhanced Range Slider with Star Animations
-document.addEventListener('DOMContentLoaded', function () {
-    const ratingSlider = document.getElementById('rating');
-    const ratingValue = document.getElementById('rating-value');
 
-    if (ratingSlider && ratingValue) {
-        let starContainer = document.createElement('div');
-        starContainer.className = 'star-display';
-        starContainer.innerHTML = generateStars(ratingSlider.value);
-        ratingSlider.parentNode.insertBefore(starContainer, ratingSlider.nextSibling);
-
-        // Smooth slider updates with star animations
-        const updateSlider = (value) => {
-            ratingValue.textContent = value;
-            updateRangeBackground(ratingSlider);
-            updateStarDisplay(value);
-            addRatingLabel(value);
-        };
-
-        ratingSlider.addEventListener('input', function () {
-            updateSlider(this.value);
-        });
-
-        // Initialize with animation
-        setTimeout(() => {
-            updateRangeBackground(ratingSlider);
-            updateStarDisplay(ratingSlider.value);
-            addRatingLabel(ratingSlider.value);
-        }, 100);
-    }
-
-    function updateRangeBackground(slider) {
-        const value = slider.value;
-        const colors = {
-            1: '#dc3545', 2: '#fd7e14', 3: '#ffc107', 4: '#20c997', 5: '#28a745'
-        };
-        const percentage = (value / 5) * 100;
-
-        slider.style.background = `linear-gradient(to right, ${colors[value]} 0%, ${colors[value]} ${percentage}%, #e9ecef ${percentage}%, #e9ecef 100%)`;
-        slider.style.boxShadow = `0 0 20px ${colors[value]}40`;
-    }
-
-    function generateStars(rating) {
-        let starsHTML = '';
-        for (let i = 1; i <= 5; i++) {
-            const starClass = i <= rating ? 'star filled' : 'star empty';
-            starsHTML += `<span class="${starClass}" style="animation-delay: ${i * 0.1}s">★</span>`;
-        }
-        return starsHTML;
-    }
-
-    function updateStarDisplay(rating) {
-        const starContainer = document.querySelector('.star-display');
-        if (starContainer) {
-            starContainer.innerHTML = generateStars(rating);
-            starContainer.className = `star-display rating-${rating}`;
-
-            // Add sparkle effect for high ratings
-            if (rating >= 4) {
-                starContainer.classList.add('sparkle');
-                setTimeout(() => starContainer.classList.remove('sparkle'), 1000);
-            }
-        }
-    }
-
-    function addRatingLabel(rating) {
-        const labels = { 1: 'Poor', 2: 'Fair', 3: 'Good', 4: 'Very Good', 5: 'Excellent' };
-
-        let labelElement = document.querySelector('.rating-label');
-        if (!labelElement) {
-            labelElement = document.createElement('div');
-            labelElement.className = 'rating-label';
-            const starDisplay = document.querySelector('.star-display');
-            if (starDisplay) {
-                starDisplay.appendChild(labelElement);
-            }
-        }
-
-        if (labelElement) {
-            labelElement.style.animation = 'labelFade 0.5s ease-out';
-            labelElement.textContent = labels[rating];
-            labelElement.className = `rating-label label-${rating}`;
-        }
-    }
-});
-
-// Enhanced Image Preview with Smooth Animations
+//Image Preview with Smooth Animations
 function setupImagePreview(inputId, previewId, imgId) {
     const input = document.getElementById(inputId);
     const preview = document.getElementById(previewId);
@@ -354,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const formElements = document.querySelectorAll(".form-floating");
     const submitBtn = document.querySelectorAll(".submit-btn");
     const authBtns = document.querySelectorAll(".auth-submit-btn");
+    const img = document.querySelector(".img-upload")
     
     if (authElements.length > 0) {
         // Use fromTo to explicitly control both start and end states
@@ -375,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (formElements.length > 0) {
         // Use fromTo to explicitly control both start and end states
-        gsap.fromTo([formElements], 
+        gsap.fromTo([formElements, img], 
             // FROM state (initial)
             {
                 y: 100,
@@ -391,6 +307,24 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         );
     }    
+    if (img) {
+        // Use fromTo to explicitly control both start and end states
+        gsap.fromTo(img, 
+            // FROM state (initial)
+            {
+                y: 100,
+                opacity: 0,
+            },
+            // TO state (final)
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                ease: "back.out(1.7)"
+            }
+        );
+    }
 
 }
 });
@@ -518,3 +452,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+

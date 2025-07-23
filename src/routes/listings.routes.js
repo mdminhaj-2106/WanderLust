@@ -5,30 +5,28 @@ import wrapAsync from "../utils/wrapAsync.js";
 import validateListing from '../middlewares/validateListing.js';
 import isLoggedIn from "../middlewares/isLoggedIn.js";
 import isOwned from "../middlewares/isOwned.js";
-import listingController from "../controllers/listings.controllers.js"
+import listingController from "../controllers/listings.controllers.js";
 import listingSchema from "../schema.js";
+import multer from 'multer';
 
+
+import { storage } from "../cloudConfig.js";
+
+const upload = multer({ storage: storage }); 
 const router = Router({ mergeParams: true });
 
-//index route
-router.get("/", wrapAsync(listingController.index));
+router.route("/")
+    .get(wrapAsync(listingController.index))
+    .post(isLoggedIn, validateListing, upload.single('listing[image]'), wrapAsync(listingController.createListing));
 
-//new route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-//create route
-router.post("/", isLoggedIn, validateListing, wrapAsync(listingController.createListing));
+router.route("/:id")
+    .put(isLoggedIn, isOwned, upload.single('listing[image]'), validateListing, wrapAsync(listingController.updateListing))
+    .delete(isLoggedIn, isOwned, wrapAsync(listingController.deleteListing))
+    .get(wrapAsync(listingController.showListing));
 
 //edit route
 router.get("/:id/edit", isLoggedIn, isOwned, wrapAsync(listingController.renderEditForm));
-
-//update route
-router.put("/:id", isLoggedIn, isOwned, validateListing, wrapAsync(listingController.updateListing));
-
-//destroy route
-router.delete("/:id", isLoggedIn, isOwned, wrapAsync(listingController.deleteListing));
-
-//show route
-router.get("/:id", wrapAsync(listingController.showListing));
 
 export default router;

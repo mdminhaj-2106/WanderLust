@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express, { urlencoded } from "express";
 import path from "path";
 import { fileURLToPath } from 'url';
@@ -10,19 +11,42 @@ import reviewRouter from "./routes/reviews.routes.js";
 import userRouter from "./routes/users.routes.js"
 import myError from "./utils/myError.js";
 import session from "express-session";
+import MongoStore from 'connect-mongo'
 import flash from 'connect-flash';
 import User from "./models/users.model.js";
 import passport from "passport";
 import localStrategy from "passport-local";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
+
+dotenv.config({ path: path.resolve('.env') });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '.env') });
+
+
+
+
+const dbUrl = process.env.ATLAS_DB_URL;
 let port = 8080;
 const app = express();
 
+const store = MongoStore.create({
+     mongoUrl: dbUrl,
+     crypto: {
+        secret: process.env.SECRET
+     },
+     touchAfter: 24 * 3600
+});
+
+store.on("error", () => {
+    console.log("Error in MONGO session Store");
+})
+
 const sessionOptions = {
-    secret: "mySecretCode",
+    store: store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -50,7 +74,9 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); // stores user-info in session
 passport.deserializeUser(User.deserializeUser()); // deletes user-info from session
 
-let MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
+
+// let MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
@@ -60,7 +86,7 @@ app.use((req, res, next) => {
 })
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
 }
 
 main()

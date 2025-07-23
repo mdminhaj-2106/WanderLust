@@ -7,20 +7,21 @@ import userController from "../controllers/users.controllers.js"
 
 const router = Router({ mergeParams: true });
 
-//SignUp, GET
-router.get("/signup", userController.renderSignUpForm);
 
-//SignUp, POST
-router.post("/signup", wrapAsync(userController.signUp));
 
-//LogIn, GET
-router.get("/login", userController.renderLogInForm);
 
-//Login POST
-router.post("/login", passport.authenticate('local', { 
-    failureRedirect: '/login', 
-    failureFlash: true 
-}), userController.login);
+router.route("/signup")
+    .get( userController.renderSignUpForm)
+    .post(wrapAsync(userController.signUp));
+
+
+router.route("/login")
+    .get(userController.renderLogInForm)
+    .post(passport.authenticate('local', {
+        failureRedirect: '/login',
+        failureFlash: true
+    }), userController.login);
+
 
 //LogOut
 router.get("/logout", userController.logout);

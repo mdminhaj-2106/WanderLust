@@ -1,0 +1,243 @@
+
+/* ============================================
+ENHANCED FLASH MESSAGES / ALERTS
+============================================ */
+
+/* Base alert styling */
+.alert {
+    border: none !important;
+    border-radius: 15px !important;
+    padding: 1.25rem 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.alert::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    border-radius: 15px 0 0 15px;
+}
+
+.alert:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Success alert styling */
+.alert-success {
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(32, 201, 151, 0.05)) !important;
+    color: #155724 !important;
+    border-left: 5px solid #28a745 !important;
+}
+
+.alert-success::before {
+    background: linear-gradient(180deg, #28a745, #20c997);
+}
+
+.alert-success .btn-close {
+    color: #155724 !important;
+    opacity: 0.7 !important;
+}
+
+.alert-success .btn-close:hover {
+    opacity: 1 !important;
+    color: #0f4419 !important;
+}
+
+/* Danger/Error alert styling */
+.alert-danger {
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(254, 66, 77, 0.05)) !important;
+    color: #721c24 !important;
+    border-left: 5px solid #dc3545 !important;
+}
+
+.alert-danger::before {
+    background: linear-gradient(180deg, #dc3545, #fe424d);
+}
+
+.alert-danger .btn-close {
+    color: #721c24 !important;
+    opacity: 0.7 !important;
+}
+
+.alert-danger .btn-close:hover {
+    opacity: 1 !important;
+    color: #491217 !important;
+}
+
+/* Enhanced close button */
+.alert .btn-close {
+    font-size: 1.1rem !important;
+    padding: 0.5rem !important;
+    border-radius: 50% !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.alert .btn-close:hover {
+    background: rgba(0, 0, 0, 0.1) !important;
+    transform: scale(1.1) !important;
+}
+
+.alert .btn-close:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Alert with icons */
+.alert-with-icon {
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+}
+
+.alert-icon {
+    font-size: 1.5rem !important;
+    flex-shrink: 0 !important;
+}
+
+.alert-success .alert-icon {
+    color: #28a745 !important;
+}
+
+.alert-danger .alert-icon {
+    color: #dc3545 !important;
+}
+
+.alert-content {
+    flex: 1 !important;
+}
+
+/* Fade animation enhancement */
+.alert.fade {
+    transition: opacity 0.4s ease, transform 0.4s ease !important;
+}
+
+.alert.fade:not(.show) {
+    opacity: 0 !important;
+    transform: translateY(-20px) scale(0.95) !important;
+}
+
+.alert.fade.show {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Auto-dismiss animation */
+.alert.dismissing {
+    animation: slideOut 0.4s ease-out forwards !important;
+}
+
+@keyframes slideOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        max-height: 100px;
+        margin-bottom: 1.5rem;
+        padding: 1.25rem 1.5rem;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+        max-height: 0;
+        margin-bottom: 0;
+        padding: 0 1.5rem;
+    }
+}
+
+/* Alert container for better positioning */
+.alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Multiple alerts stacking */
+.alert-container .alert {
+    margin-bottom: 1rem !important;
+}
+
+.alert-container .alert:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Progress bar for auto-dismiss */
+.alert-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0 0 15px 15px;
+    animation: progressBar 5s linear forwards;
+}
+
+.alert-success .alert-progress {
+    background: #28a745;
+}
+
+.alert-danger .alert-progress {
+    background: #dc3545;
+}
+
+@keyframes progressBar {
+    0% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0%;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .alert-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .alert {
+        padding: 1rem 1.25rem !important;
+        font-size: 0.95rem !important;
+    }
+
+    .alert-icon {
+        font-size: 1.3rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .alert {
+        padding: 0.875rem 1rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    .alert-with-icon {
+        gap: 0.75rem !important;
+    }
+
+    .alert-icon {
+        font-size: 1.2rem !important;
+    }
+}

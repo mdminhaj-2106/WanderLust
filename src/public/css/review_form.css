@@ -1,0 +1,66 @@
+
+/*====================================
+  REVIEW FORM
+  ====================================*/
+.form-control:invalid:not(.is-invalid) {
+    border-color: #ced4da;
+    box-shadow: none;
+}
+
+.form-control:invalid:not(.is-invalid):focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Only show red when explicitly marked invalid */
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.form-control.is-valid {
+    border-color: #198754;
+}
+
+.review-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.review-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Star rating styling for consistency */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.rating span {
+    font-size: 18px;
+    transition: color 0.2s ease;
+}
+
+/* Rating value display */
+#rating-value {
+    font-weight: bold;
+    color: #343a40;
+    font-size: 16px;
+}
+
+/* rating section  */
+.review-f-blk {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 20px;
+}
+
+.review-f-blk label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 10px;
+}
+

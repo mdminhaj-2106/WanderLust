@@ -18,7 +18,7 @@
                 <p class="form-subtitle">Share your amazing place with the world</p>
             </div>
             
-            <form action="/listings" method="post" novalidate class="needs-validation">
+            <form action="/listings" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
                 <!-- Title Field -->
                 <div class="form-floating">
                     <input type="text" name="listing[title]" class="form-control" id="createTitle" placeholder="Enter listing title" required>
@@ -34,23 +34,18 @@
                 </div>
 
                 <!-- Image Field -->
-                <div class="form-floating">
-                    <input type="url" name="listing[image][url]" class="form-control" id="createImage" placeholder="Paste image URL here">
-                    <label for="createImage">Image URL</label>
+                <div class="form-floating" id="img-upload">
+                    <input type="file" name="listing[image]" class="form-control" id="createImage" placeholder="Paste image URL here" required>
+                    <label for="createImage" class="form-label">Upload Listing Image</label>
                     <i class="fas fa-image form-icon"></i>
                 </div>
 
-                <div class="image-preview" id="createImagePreview" style="display: none;">
-                    <img id="createPreviewImg" src="" alt="Image preview">
-                    <p class="mt-2 text-muted">Image Preview</p>
-                </div>
-
                 <!-- Price and Location Row -->
-                <div class="form-row">
+                <div class="form-row ">
                     <div class="form-floating col-price">
                         <input type="number" name="listing[price]" class="form-control" id="createPrice" placeholder="Enter price" required min="0" step="0.01">
-                        <label for="createPrice">Price ($)</label>
-                        <i class="fas fa-dollar-sign form-icon"></i>
+                        <label for="createPrice">Price (&#8377;)</label>
+                        <i class="fas fa-rupee-sign form-icon"></i>
                     </div>
                     
                     <div class="form-floating col-location">

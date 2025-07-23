@@ -1,31 +1,19 @@
 <%layout("../layouts/boilerplate.ejs")%>
 
 <body>
-    <!-- Toggle Buttons -->
-    <div class="container mt-4">
-        <div class="text-center mb-4">
-            <button class="btn btn-outline-primary me-2" onclick="showCreateForm()">
-                <i class="fas fa-plus me-2"></i>Create New
-            </button>
-            <button class="btn btn-outline-secondary" onclick="showEditForm()">
-                <i class="fas fa-edit me-2"></i>Edit Existing
-            </button>
-        </div>
-    </div>
-
     <!-- Edit Form -->
     <div class="form-container mt-4" id="editForm">
-        <div class="form-card">
+        <div class="form-card mt-4">
             <div class="form-header">
                 <h3 class="form-title">Edit Your Listing</h3>
                 <p class="form-subtitle">Update your listing details</p>
             </div>
             
-            <form action="/listings/123?_method=PUT" method="post" class="needs-validation" novalidate>
+            <form action="/listings/<%=listing._id%>?_method=PUT" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
                 <!-- Title Field -->
                 <div class="form-floating">
                     <input type="text" name="listing[title]" class="form-control" id="editTitle" 
-                           placeholder="Enter listing title" value="Beautiful Oceanview Villa" required>
+                           placeholder="Enter listing title" value="<%=listing.title%>" required>
                     <label for="editTitle">Listing Title</label>
                     <i class="fas fa-home form-icon"></i>
                 </div>
@@ -33,17 +21,21 @@
                 <!-- Description Field -->
                 <div class="form-floating">
                     <textarea name="listing[description]" class="form-control" id="editDescription" 
-                              placeholder="Describe your place" required>A stunning oceanview villa with private beach access, perfect for a romantic getaway or family vacation.</textarea>
+                              placeholder="Describe your place" required><%=listing.description%></textarea>
                     <label for="editDescription">Description</label>
                     <i class="fas fa-align-left form-icon"></i>
                 </div>
 
+                <!-- Current Image Preview -->
+                <div class="image-preview-container form-floating">
+                    <h5 class="img-preview-title">Current Image</h5>
+                    <img src="<%=originalUrl%>" alt="<%=listing.title%>" class="preview-image">
+                </div>
+
                 <!-- Image Field -->
-                <div class="form-floating">
-                    <input type="url" name="listing[image][url]" class="form-control" id="editImage" 
-                           placeholder="Paste image URL here" 
-                           value="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" required>
-                    <label for="editImage">Image URL</label>
+                <div class="form-floating" id="img-upload">
+                    <input type="file" name="listing[image]" class="form-control" id="editImage">
+                    <label for="editImage">Upload New Image</label>
                     <i class="fas fa-image form-icon"></i>
                 </div>
 
@@ -51,14 +43,14 @@
                 <div class="form-row">
                     <div class="form-floating col-price">
                         <input type="number" name="listing[price]" class="form-control" id="editPrice" 
-                               placeholder="Enter price" value="299" min="0" step="0.01" required>
-                        <label for="editPrice">Price ($)</label>
-                        <i class="fas fa-dollar-sign form-icon"></i>
+                               placeholder="Enter price" value="<%=listing.price%>" min="0" step="0.01" required>
+                        <label for="editPrice">Price (&#8377;)</label>
+                        <i class="fas fa-rupee-sign form-icon"></i>
                     </div>
                     
                     <div class="form-floating col-location">
                         <input type="text" name="listing[location]" class="form-control" id="editLocation" 
-                               placeholder="Enter location" value="Malibu, California" required>
+                               placeholder="Enter location" value="<%=listing.location%>" required>
                         <label for="editLocation">Location</label>
                         <i class="fas fa-map-marker-alt form-icon"></i>
                     </div>
@@ -67,7 +59,7 @@
                 <!-- Country Field -->
                 <div class="form-floating">
                     <input type="text" name="listing[country]" class="form-control" id="editCountry" 
-                           placeholder="Enter country" value="United States" required>
+                           placeholder="Enter country" value="<%=listing.country%>" required>
                     <label for="editCountry">Country</label>
                     <i class="fas fa-globe form-icon"></i>
                 </div>
