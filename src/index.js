@@ -32,16 +32,26 @@ const dbUrl = process.env.ATLAS_DB_URL;
 console.log("ATLAS_DB_URL RAW =", process.env.ATLAS_DB_URL);
 
 
+
+
 let port = 8080;
 const app = express();
 app.set("trust proxy", 1);
 
+async function main() {
+  await mongoose.connect(dbUrl);
+  console.log("Connection Established Successfully !!!");
+}
+await main(); 
+
 const store = MongoStore.create({
-     mongoUrl: dbUrl,
-     crypto: {
-        secret: process.env.SECRET
-     },
-     touchAfter: 24 * 3600
+  client: mongoose.connection.getClient(),
+  dbName: "wanderlust",
+  collectionName: "sessions",
+  crypto: {
+    secret: process.env.SECRET
+  },
+  touchAfter: 24 * 3600
 });
 
 store.on("error", () => {
@@ -52,7 +62,7 @@ const sessionOptions = {
     store: store,
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -91,17 +101,7 @@ app.use((req, res, next) => {
     next();
 })
 
-async function main() {
-    await mongoose.connect(dbUrl);
-}
 
-main()
-    .then((result) => {
-        console.log("Connection Established Successfully !!!");
-    })
-    .catch((err) => {
-        console.log(err);
-    });
 
 // Root route - redirect to listings
 app.get("/", (req, res) => {
