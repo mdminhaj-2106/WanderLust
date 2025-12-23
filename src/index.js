@@ -45,7 +45,7 @@ async function main() {
   console.log("Connection Established Successfully !!!");
 }
 
-async startServer(){
+async function startServer(){
 await main(); 
 
 const store = MongoStore.create({
