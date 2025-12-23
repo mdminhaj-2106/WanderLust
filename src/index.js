@@ -47,35 +47,38 @@ async function main() {
 
 async function startServer() { 
 await main(); 
-await new Promise(resolve => setTimeout(resolve, 1000)); 
-
-
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  collectionName: "sessions",
-  crypto: {
-    secret: process.env.SECRET
-  },
-  touchAfter: 24 * 3600
-});
-
-store.on("error", (err) => {
-    console.log("Error in MONGO session Store", err);
-})
-
-const sessionOptions = {
-    store: store,
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax"
-    }
-};
+ try {
+    await mongoose.connection.db.collection('sessions').drop();
+    console.log('Cleared old sessions collection');
+  } catch (err) {
+    console.log('No sessions collection to clear or error:', err.message);
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  
+  const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 3600,
+    autoRemove: 'native', 
+    autoRemoveInterval: 10 
+  });
+  
+  store.on("error", (err) => {
+      console.log("Error in MONGO session Store:", err);
+  });
+  
+  const sessionOptions = {
+      store: store,
+      secret: process.env.SECRET,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax"
+      }
+  };
 
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
