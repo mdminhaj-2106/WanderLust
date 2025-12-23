@@ -29,6 +29,9 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 
 const dbUrl = process.env.ATLAS_DB_URL;
+console.log("ATLAS_DB_URL RAW =", process.env.ATLAS_DB_URL);
+
+
 let port = 8080;
 const app = express();
 
