@@ -47,10 +47,11 @@ async function main() {
 
 async function startServer() { 
 await main(); 
+await new Promise(resolve => setTimeout(resolve, 1000)); 
+
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
-  dbName: "wanderlust",
   collectionName: "sessions",
   crypto: {
     secret: process.env.SECRET
@@ -58,8 +59,8 @@ const store = MongoStore.create({
   touchAfter: 24 * 3600
 });
 
-store.on("error", () => {
-    console.log("Error in MONGO session Store");
+store.on("error", (err) => {
+    console.log("Error in MONGO session Store", err);
 })
 
 const sessionOptions = {
@@ -130,8 +131,9 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     let { status = 500, message = "Some random err" } = err;
     console.log("Error caught:", err);
-    res.status(status).render("error.ejs", { message });
-});
+    if (!res.headersSent) {
+        res.status(status).render("error.ejs", { message });
+    }});
 
 // Setup server
 app.listen(port, () => {
