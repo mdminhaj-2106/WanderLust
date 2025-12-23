@@ -34,6 +34,7 @@ console.log("ATLAS_DB_URL RAW =", process.env.ATLAS_DB_URL);
 
 let port = 8080;
 const app = express();
+app.set("trust proxy", 1);
 
 const store = MongoStore.create({
      mongoUrl: dbUrl,
