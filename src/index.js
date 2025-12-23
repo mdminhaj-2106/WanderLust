@@ -25,7 +25,9 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, '.env') });
 
-
+if (!process.env.SECRET) {
+  throw new Error("SECRET environment variable is not set");
+}
 
 
 const dbUrl = process.env.ATLAS_DB_URL;
@@ -42,10 +44,12 @@ async function main() {
   await mongoose.connect(dbUrl);
   console.log("Connection Established Successfully !!!");
 }
+
+async startServer(){
 await main(); 
 
 const store = MongoStore.create({
-  client: mongoose.connection.getClient(),
+  mongoUrl: dbUrl,
   dbName: "wanderlust",
   collectionName: "sessions",
   crypto: {
@@ -132,4 +136,11 @@ app.use((err, req, res, next) => {
 // Setup server
 app.listen(port, () => {
     console.log(`Server is listening via port ${port}`);
+});
+}
+
+// Start the server
+startServer().catch(err => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
 });
